@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ItemClickListener {
 
     // 1 - AdapterView : RecyclerView
     RecyclerView recyclerView;
@@ -39,5 +41,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+        // Handling click events
+        adapter.setClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        Toast.makeText(this, "You opted " + myListData[position].getTitle() + " vaccine", Toast.LENGTH_SHORT).show();
     }
 }

@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
+    // 4 - Handling the click events instance
+    private ItemClickListener clickListener;
+
     // 1 - Data Source
     private VaccineModel[] listData;
 
@@ -18,8 +21,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.listData = listData;
     }
 
+    public void setClickListener(ItemClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
     // 2 - View Holder Class
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Variable Initialization
         public ImageView imgView;
@@ -31,6 +38,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             // View Declaration
             this.imgView = itemView.findViewById(R.id.iv_logo);
             this.txtView = itemView.findViewById(R.id.tv_vaccine_name);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (clickListener != null) {
+                clickListener.onClick(v, getAdapterPosition());
+            }
         }
     }
 
